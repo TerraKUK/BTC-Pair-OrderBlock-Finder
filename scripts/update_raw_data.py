@@ -19,7 +19,7 @@ def fetch_all_pairs():
     return [
         symbol['symbol']
         for symbol in data['symbols']
-        if symbol['quoteAsset'] == "BTC" and symbol['status'] == "TRADING"
+        if symbol['quoteAsset'] == "USDT" and symbol['status'] == "TRADING"
     ]
 
 def fetch_and_save_raw_data(pair):
