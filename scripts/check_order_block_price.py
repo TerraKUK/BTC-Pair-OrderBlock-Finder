@@ -6,7 +6,7 @@ import pandas as pd
 API_BASE_URL = "https://api.binance.us"
 ORDER_BLOCK_DIR = "data/orderblocks"
 SENT_ALERTS_FILE = "data/sent_alerts.txt"
-THRESHOLD = 0.02
+THRESHOLD = 0.01
 
 TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
 TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
