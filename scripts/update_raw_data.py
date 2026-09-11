@@ -35,7 +35,7 @@ def fetch_all_pairs():
 
 def fetch_and_save_raw_data(pair):
     endpoint = f"{API_BASE_URL}/api/v3/klines"
-    start_date = datetime.now(timezone.utc) - timedelta(days=730)
+    start_date = datetime.now(timezone.utc) - timedelta(days=180)
     params = {
         "symbol": pair,
         "interval": "1d",
@@ -62,7 +62,7 @@ def fetch_and_save_raw_data(pair):
     df["ts"] = pd.to_datetime(df["ts"], unit='ms')
     df[["open", "high", "low", "close"]] = df[["open", "high", "low", "close"]].astype(float)
 
-    output_file = f"{RAW_DATA_DIR}/{pair}_4h.csv"
+    output_file = f"{RAW_DATA_DIR}/{pair}_1d.csv"
     df.to_csv(output_file, index=False)
     print(f"Saved raw data for {pair} to {output_file}")
 
