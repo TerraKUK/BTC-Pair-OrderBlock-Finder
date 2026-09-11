@@ -38,7 +38,7 @@ def fetch_and_save_raw_data(pair):
     start_date = datetime.now(timezone.utc) - timedelta(days=730)
     params = {
         "symbol": pair,
-        "interval": "4h",
+        "interval": "1d",
         "startTime": int(start_date.timestamp() * 1000),
         "limit": 1000
     }
