@@ -1,10 +1,3 @@
-import os
-import requests
-import pandas as pd
-from datetime import datetime, timedelta, timezone
-
-API_BASE_URL = "https://api.binance.us"
-DATA_DIR = "data"
 RAW_DATA_DIR = f"{DATA_DIR}/raw"
 
 API_KEY = os.getenv("BINANCE_API_KEY")
