@@ -7,7 +7,6 @@ API_BASE_URL = "https://api.binance.us"
 DATA_DIR = "data"
 RAW_DATA_DIR = f"{DATA_DIR}/raw"
 
-# Stablecoins to exclude from scanning
 STABLECOINS = {
     "USDC", "USDT", "BUSD", "DAI", "TUSD", "USDP", "USDD",
     "USD1", "FDUSD", "PYUSD", "USDE", "USDS", "USDF", "GUSD",
