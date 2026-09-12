@@ -3,6 +3,7 @@ import json
 import glob
 import requests
 import pandas as pd
+from datetime import datetime, timedelta, timezone
 
 API_BASE_URL = "https://api.binance.us"
 ORDER_BLOCK_DIR = "data/orderblocks"
@@ -10,6 +11,7 @@ SENT_ALERTS_FILE = "data/sent_alerts.txt"
 LAST_PRICES_FILE = "data/last_prices.json"
 
 ZONE_WIDTH = 0.02  # 2% zone width
+MAX_AGE_DAYS = 14  # Ignore OB older than 14 days
 
 TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
 TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
@@ -65,6 +67,7 @@ def check_order_block_prices():
     new_sent = set()
     new_prices = {}
     triggered = 0
+    cutoff_date = datetime.now(timezone.utc) - timedelta(days=MAX_AGE_DAYS)
 
     for file_path in csv_files:
         asset = os.path.basename(file_path).split("_")[0]
@@ -78,6 +81,13 @@ def check_order_block_prices():
             for _, row in df.iterrows():
                 ob_price = row["price"]
                 ob_type = row["type"]
+                ob_date = row["date_time"]
+
+                # Skip old OB
+                if ob_date.tz is None:
+                    ob_date = ob_date.tz_localize("UTC")
+                if ob_date < cutoff_date:
+                    continue
 
                 if ob_type == "bullish":
                     zone_top = ob_price
@@ -93,7 +103,7 @@ def check_order_block_prices():
                 # Signal 1: entered zone (one-time)
                 enter_key = f"{asset}_{ob_type}_{ob_price}_entered"
                 if entered and enter_key not in sent_alerts:
-                    emoji = "\U0001F7E2"  # green
+                    emoji = "\U0001F7E2"
                     msg = f"{emoji} {asset} entered {ob_type} OB ({ob_price}). Now: {current_price}"
                     send_alert(msg)
                     new_sent.add(enter_key)
@@ -104,14 +114,13 @@ def check_order_block_prices():
                 in_zone_key = f"{asset}_{ob_type}_{ob_price}_in_zone"
                 if zone_bottom <= current_price <= zone_top:
                     if in_zone_key not in sent_alerts:
-                        emoji = "\U0001F7E1"  # yellow
+                        emoji = "\U0001F7E1"
                         msg = f"{emoji} {asset} in {ob_type} OB zone ({ob_price}). Now: {current_price}"
                         send_alert(msg)
                         new_sent.add(in_zone_key)
                         sent_alerts.add(in_zone_key)
                         triggered += 1
                 else:
-                    # Price exited zone — remove in_zone key so it can trigger again
                     if in_zone_key in sent_alerts:
                         sent_alerts.discard(in_zone_key)
 
