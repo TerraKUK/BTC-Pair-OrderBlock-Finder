@@ -1,0 +1,14 @@
+PAXGUSDT_bullish_4389.64_in_zone
+1000MOGUSDT_bearish_9.911e-05_in_zone
+YFIUSDT_bearish_2177.0_in_zone
+REQUSDT_bullish_0.0519_in_zone
+BLURUSDT_bearish_0.017_in_zone
+BLURUSDT_bullish_0.017_in_zone
+TFUELUSDT_bearish_0.00989_in_zone
+PURRUSDT_bearish_0.1125_in_zone
+1000MOGUSDT_bullish_0.00010001_in_zone
+KAITOUSDT_bearish_0.3092_in_zone
+NMRUSDT_bullish_8.98_in_zone
+1INCHUSDT_bullish_0.0905_in_zone
+APTUSDT_bearish_0.607_in_zone
+IMXUSDT_bullish_0.1229_in_zone
