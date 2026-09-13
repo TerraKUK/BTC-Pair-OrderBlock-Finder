@@ -1,6 +1,5 @@
 name: Update Raw Data
-permissions:
-  contents: write
+
 on:
   schedule:
     - cron: "0 * * * *"  # Runs every hour
