@@ -28,7 +28,7 @@ def fetch_and_save_raw_data(pair):
     start_date = datetime.now(timezone.utc) - timedelta(days=730)  # Use timezone-aware datetime
     params = {
         "symbol": pair,
-        "interval": "4h",
+        "interval": "1d",
         "startTime": int(start_date.timestamp() * 1000),
         "limit": 1000
     }
@@ -51,7 +51,7 @@ def fetch_and_save_raw_data(pair):
     # Only convert numeric columns to float
     df[["open", "high", "low", "close"]] = df[["open", "high", "low", "close"]].astype(float)
 
-    output_file = f"{RAW_DATA_DIR}/{pair}_4h.csv"
+    output_file = f"{RAW_DATA_DIR}/{pair}_1d.csv"
     df.to_csv(output_file, index=False)
     print(f"Saved raw data for {pair} to {output_file}")
 
